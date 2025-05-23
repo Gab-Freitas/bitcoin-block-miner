@@ -1,1 +1,0 @@
-npm run test -- test/coinbase.spec.ts

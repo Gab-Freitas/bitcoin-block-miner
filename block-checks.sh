@@ -1,1 +1,0 @@
-npm run test -- test/block.spec.ts
