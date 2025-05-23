@@ -1,54 +1,61 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/fSFImq2v)
-# Bitcoin Protocol Development - Week 3: Mine your first block
+# Bitcoin Block Mining Simulation
 
 ## Overview
-In this challenge, you are tasked with the simulation of mining process of a block, which includes validating and including transactions from a given set of transactions.
-The repository contains a folder `mempool` which contains JSON files.
-These files represent individual transactions. Your goal is to successfully mine a block by including some of these transactions, following the specific requirements outlined below.
+
+As part of my personal exploration of the Bitcoin protocol, I developed a simulation of the mining process for a Bitcoin block. This includes selecting, validating, and including transactions from a mempool, constructing a valid block header, creating a coinbase transaction, and performing proof-of-work to meet the difficulty requirement.
+
+All transaction data is provided as individual JSON files inside a folder named `mempool`. Each JSON file represents a transaction with all necessary metadata.
 
 ## Objective
-Your primary objective is to write a script that processes a series of transactions, validates them, and then mines them into a block. The output of your script should be a file named `out.txt` that follows a specific format.
 
-Place your solution in the appropriate directory based on your chosen language:
-- [bash](./bash/solution.sh)
-- [javascript](./javascript/index.js)
-- [python](./python/main.py)
-- [rust](./rust/src/main.rs)
+The goal of this project was to implement a script that:
 
-## Requirements
-### Input
-- You are provided with a folder named `mempool` containing several JSON files. Each file represents a transaction that includes all necessary information regarding the transaction.
+- Parses and validates transactions from the mempool.
+- Constructs a coinbase transaction.
+- Builds a complete block header with all required fields.
+- Mines the block by finding a nonce such that the block hash meets the given difficulty target.
+- Outputs the result to a file named `out.txt`.
 
-### Output
-Your script must generate an output file named `out.txt` with the following structure:
-- First line: The block header.
-- Second line: The serialized coinbase transaction.
-- Following lines: The transaction IDs (txids) of the transactions mined in the block, in order. The first txid should be that of the coinbase transaction
+### Output Format (`out.txt`)
 
-### Difficulty Target
-The difficulty target is `0000ffff00000000000000000000000000000000000000000000000000000000`. This is the value that the block hash must be less than for the block to be successfully mined.
+```
 
-### Previous Block Hash
-You can use any value for the previous block hash as long as it meets the difficulty target.
+<block header>
+<serialized coinbase transaction>
+<txid_1>
+<txid_2>
+...
+```
 
-## Execution
-To test your solution locally:
-- Uncomment the line corresponding to your language in [run.sh](./run.sh).
-- Execute [`local.sh`](./local.sh).
+* First line: the full block header (hexadecimal).
+* Second line: the serialized coinbase transaction.
+* Following lines: transaction IDs (txids) of the included transactions, starting with the coinbase txid.
 
-If your code works, you will see the test completed successfully.
+## Technical Specifications
 
-## Evaluation Criteria
-Your submission will be evaluated based on:
-- **Autograder**: Your code must pass the autograder [test script](./test/sanity-checks.spec.ts).
-- **Explainer Comments**: Include comments explaining each step of your code.
-- **Code Quality**: Your code should be well-organized, commented, and adhere to best practices.
+* **Difficulty Target**: `0000ffff00000000000000000000000000000000000000000000000000000000`
+* **Previous Block Hash**: Can be any valid 64-character hex string, as long as the final block hash meets the difficulty target.
+* **Transaction Selection**: Transactions are selected from the `mempool` folder and can be filtered based on validity, fees, or custom rules.
 
-### Plagiarism Policy
-Our plagiarism detection checker thoroughly identifies any instances of copying or cheating. Participants are required to publish their solutions in the designated repository, which is private and accessible only to the individual and the administrator. Solutions should not be shared publicly or with peers. In case of plagiarism, both parties involved will be directly disqualified to maintain fairness and integrity.
+## Implementation
 
-### AI Usage Disclaimer
-You may use AI tools like ChatGPT to gather information and explore alternative approaches, but avoid relying solely on AI for complete solutions. Verify and validate any insights obtained and maintain a balance between AI assistance and independent problem-solving.
+This entire project was implemented using **Python** due to its readability, flexibility, and rich ecosystem of libraries for JSON handling, cryptography, and data processing. All logic—from transaction parsing to block mining—was coded from scratch to gain a deeper understanding of how the Bitcoin protocol operates at a low level.
 
-## Why These Restrictions?
-These rules are designed to enhance your understanding of the technical aspects of Bitcoin. By completing this assignment, you gain practical experience with the technology that secures and maintains the trustlessness of Bitcoin. This challenge not only tests your ability to develop functional Bitcoin applications but also encourages deep engagement with the core elements of Bitcoin technology.
+## Running the Project
+
+To run the script locally:
+
+1. Make sure you have Python 3 installed.
+2. Run the main Python script (e.g., `python mine_block.py`).
+3. The script will process the mempool, mine a block, and generate `out.txt`.
+
+If successful, the script will generate a valid mined block that satisfies the difficulty constraints.
+
+## Goals and Learning Outcomes
+
+This project was an opportunity to:
+
+* Deepen my understanding of Bitcoin’s mining mechanism and block structure.
+* Work with real-like transaction data and simulate a realistic mempool.
+* Implement proof-of-work from scratch.
+* Gain hands-on experience with transaction serialization and block hashing.
